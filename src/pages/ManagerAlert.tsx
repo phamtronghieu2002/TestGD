@@ -88,7 +88,9 @@ interface ManagerAlertProps {}
 const ManagerAlert: React.FC = () => {
   return (
     <>
-      <Table columns={columns} dataSource={data} />;
+      <Table 
+      columns={columns} 
+      dataSource={data} />;
     </>
   );
 };
