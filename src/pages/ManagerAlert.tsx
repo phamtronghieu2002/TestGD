@@ -15,6 +15,9 @@ import type { TabsProps } from "antd";
 import type { FormProps } from "antd";
 import { Checkbox, Form } from "antd";
 import type { CheckboxProps } from "antd";
+import type { PopconfirmProps } from "antd";
+import { message, Popconfirm } from "antd";
+import { FormC2 } from "../components/Form/Form";
 interface DataType {
   key: string;
   name: string;
@@ -118,56 +121,12 @@ const suffix = (
   />
 );
 
-const columns: TableProps<DataType>["columns"] = [
-  {
-    title: "Tên nhắc nhở",
-    dataIndex: "name",
-    key: "name",
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "Biển số phương tiện",
-    dataIndex: "licensePlate",
-    key: "licensePlate",
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "Loại nhắc nhở ",
-    dataIndex: "type",
-    key: "type",
-  },
-  {
-    title: "Số Kilomet nhắc nhở ",
-    dataIndex: "km",
-    key: "km",
-  },
-  {
-    title: "Ngày nhắc nhở ",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "Trạng thái nhắc nhở ",
-    dataIndex: "time",
-    key: "time",
-  },
-  {
-    title: "Tùy chỉnh nhắc nhở ",
-    dataIndex: "address",
-    key: "address",
-    render: () => <Switch onChange={onChange} />,
-  },
-  {
-    title: "Tùy chỉnh/chỉnh sửa ",
-    dataIndex: "address",
-    key: "address",
-    render: () => (
-      <Button type="primary" onClick={onEditClick}>
-        Chỉnh sửa
-      </Button>
-    ),
-  },
-];
+
+
+const cancel: PopconfirmProps["onCancel"] = (e) => {
+  console.log(e);
+  message.error("Click on No");
+};
 
 const data: DataType[] = [
   {
@@ -201,27 +160,6 @@ const data: DataType[] = [
 
 //model
 
-const columns1: TableProps<DataTypeReminder>["columns"] = [
-  {
-    title: "Tên loại nhắc nhở",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "Hiển thị",
-    dataIndex: "checked",
-    key: "checked",
-    render: (checked: boolean) => (
-      <Checkbox checked={checked} onChange={onChange3} />
-    ),
-  },
-  {
-    title: "Xóa nhắc nhở",
-    dataIndex: "name",
-    key: "name",
-    render: () => <Button type="primary">Xóa</Button>,
-  },
-];
 
 const data1: DataTypeReminder[] = [
   {
@@ -259,9 +197,109 @@ const data1: DataTypeReminder[] = [
 //
 interface ManagerAlertProps {}
 
+
 const ManagerAlert: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const confirm: PopconfirmProps["onConfirm"] = (e) => {
+      setIsModalOpen(true);
+  };
+  const columns: TableProps<DataType>["columns"] = [
+    {
+      title: "Tên nhắc nhở",
+      dataIndex: "name",
+      key: "name",
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "Biển số phương tiện",
+      dataIndex: "licensePlate",
+      key: "licensePlate",
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "Loại nhắc nhở ",
+      dataIndex: "type",
+      key: "type",
+    },
+    {
+      title: "Số Kilomet nhắc nhở ",
+      dataIndex: "km",
+      key: "km",
+    },
+    {
+      title: "Ngày nhắc nhở ",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Trạng thái nhắc nhở ",
+      dataIndex: "time",
+      key: "time",
+    },
+    {
+      title: "Tùy chỉnh nhắc nhở ",
+      dataIndex: "address",
+      key: "address",
+      render: () => <Switch onChange={onChange} />,
+    },
+    {
+      title: "Tùy chỉnh/chỉnh sửa ",
+      dataIndex: "address",
+      key: "address",
+      render: () => (
+        <Button type="primary" onClick={onEditClick}>
+          Chỉnh sửa
+        </Button>
+      ),
+    },
+    {
+      title: "Đã thực hiện",
+      dataIndex: "address",
+      key: "address",
+      render: () => (
+        <Popconfirm
+          title="Bạn có muốn tiếp tục tạo cảnh báo cho loại cảnh báo này không?"
+          onConfirm={confirm}
+          onCancel={cancel}
+          okText="Có"
+          cancelText="Không"
+        >
+          <Checkbox onChange={() => {}}></Checkbox>
+        </Popconfirm>
+      ),
+    },
+  ];
+  const columns1: TableProps<DataTypeReminder>["columns"] = [
+    {
+      title: "Tên loại nhắc nhở",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Hiển thị",
+      dataIndex: "checked",
+      key: "checked",
+      render: (checked: boolean) => (
+        <Popconfirm
+          title="Delete the task"
+          description="Are you sure to delete this task?"
+          onConfirm={confirm}
+          onCancel={cancel}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Checkbox checked={checked} onChange={onChange3} />
+        </Popconfirm>
+      ),
+    },
+    {
+      title: "Xóa nhắc nhở",
+      dataIndex: "name",
+      key: "name",
+      render: () => <Button type="primary">Xóa</Button>,
+    },
+  ];
+  
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -274,6 +312,12 @@ const ManagerAlert: React.FC = () => {
   };
   return (
     <>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <span>
+          Biển số xe: <b>51A-12345</b>
+        </span>
+      </div>
+      ,
       <div
         style={{
           marginTop: 50,
@@ -291,9 +335,9 @@ const ManagerAlert: React.FC = () => {
           onSearch={onSearch}
           style={{ width: 800, margin: 24 }}
         />
- 
+
         <Modal
-          title="Quản lý các loại nhắc nhở"
+          title="Tạo cảnh báo"
           open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
@@ -301,51 +345,8 @@ const ManagerAlert: React.FC = () => {
           style={{ width: "100%" }}
         >
           {/* <Tabs defaultActiveKey="1" items={items} onChange={onChange1} />; */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Form
-              name="basic"
-              labelCol={{ span: 8 }}
-              wrapperCol={{ span: 16 }}
-              style={{ maxWidth: 5000, display: "flex", alignItems: "center" }}
-              initialValues={{ remember: true }}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              autoComplete="off"
-            >
-              <Form.Item<FieldType>
-                label="Tên loại nhắc nhở"
-                name="username"
-                rules={[{ required: true, message: "Điền loại nhắc nhở mới" }]}
-              >
-                <Input style={{ width: 300 }} />
-              </Form.Item>
-              <Form.Item<FieldType>
-                name="remember"
-                valuePropName="checked"
-                wrapperCol={{ offset: 8, span: 16 }}
-              >
-                <Checkbox>Hiển thị</Checkbox>
-              </Form.Item>
-              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  style={{
-                    marginRight: 150,
-                  }}
-                >
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
-          </div>
+          <FormC2 />
 
-          <Table columns={columns1} dataSource={data1} />
         </Modal>
         <Select
           defaultValue="Tất cả nhắc nhở"

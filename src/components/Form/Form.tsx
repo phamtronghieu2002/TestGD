@@ -108,6 +108,79 @@ const FormC: React.FC = () => {
     </div>
   );
 };
+
+
+
+export const FormC2: React.FC = () => {
+  const [isName, setIsName] = useState<boolean>(false);
+
+  return (
+    <div style={{ paddingTop: "20px" }}>
+      <Form
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 14 }}
+        layout="horizontal"
+        disabled={false}
+        style={{ maxWidth: 600 }}
+      >
+        {/* loại nhắc nhở */}
+        <Form.Item
+          rules={[{ required: true, message: "Name is required" }]}
+          style={{ gap: 10 }}
+          label="Loại nhắc nhở"
+        >
+           <Input 
+           disabled={true}
+           value={"cảnh báo dầu"}
+           />
+        </Form.Item>
+        {/* tên nhắc nhở */}
+        {isName && (
+          <Form.Item
+            rules={[{ required: true, message: "Name is required" }]}
+            style={{ gap: 10 }}
+            label="Tên loại nhắc nhở"
+          >
+            <Input />
+          </Form.Item>
+        )}
+        <Form.Item label="KM ban đầu">
+          <InputNumber value={10} />
+          <span style={{ marginLeft: 10, display: "inline-block" }}>(KM)</span>
+        </Form.Item>
+        <Form.Item label="Cảnh báo sau">
+          <InputNumber 
+          value={20}
+          />
+          <span style={{ marginLeft: 10, display: "inline-block" }}>(KM)</span>
+        </Form.Item>
+
+        <Form.Item label="Ngày nhắc nhở">
+          <DatePicker
+            disabledDate={(current) => {
+              return current && current < moment().endOf("day");
+            }}
+          />
+        </Form.Item>
+
+        <Form.Item label="nhắc nhở trước">
+          <InputNumber />
+          <span style={{ marginLeft: "10px", display: "inline-block" }}>
+            ngày
+          </span>
+        </Form.Item>
+        {/* text <Area></Area>*/}
+        <Form.Item label="Ghi chú">
+          <TextArea />
+        </Form.Item>
+
+        <Form.Item label="Bật/Tắt nhắc nhở" valuePropName="checked">
+          <Switch defaultChecked />
+        </Form.Item>
+      </Form>
+    </div>
+  );
+};
 export const FormAddViahicle: React.FC = () => {
   return (
     <div style={{ paddingTop: "20px" }}>
