@@ -46,23 +46,23 @@ const columns1: TableColumnsType<DataType> = [
 const dataSource: DataType[] = [
   {
     key: 1,
-    name: `Edward King1`,
+    name: `92H1 - 5312`,
     age: 32,
-    isAlert: "Cảnh báo dầu,Bình điện,Đăng kiểm",
+    isAlert: "🛢 🔧 ⚡️ 🗒 ⭐",
     detail: <Link to="/detail">Chi tiết</Link>,
   },
   {
-    key: 1,
-    name: `Edward King1`,
+    key: 2,
+    name: `47H3 - 1234`,
     age: 32,
-    isAlert: "Cảnh báo xăng",
+    isAlert: "🛢",
     detail: <Link to="/detail">Chi tiết</Link>,
   },
   {
-    key: 1,
-    name: `Edward King1`,
+    key: 3,
+    name: `59H1 - 1234`,
     age: 32,
-    isAlert: "----",
+    isAlert: "  ",
     detail: <Link to="/detail">Chi tiết</Link>,
   },
 ];
