@@ -101,8 +101,8 @@ const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
 const onChange = (checked: boolean) => {
   console.log(`Switch to ${checked}`);
 };
-const onEditClick = () => {
-  console.log("Edit button clicked");
+const onEditClick = (setState: any) => {
+  setState();
 };
 
 const { Search } = Input;
@@ -120,8 +120,6 @@ const suffix = (
     }}
   />
 );
-
-
 
 const cancel: PopconfirmProps["onCancel"] = (e) => {
   console.log(e);
@@ -160,7 +158,6 @@ const data: DataType[] = [
 
 //model
 
-
 const data1: DataTypeReminder[] = [
   {
     key: "1",
@@ -197,11 +194,12 @@ const data1: DataTypeReminder[] = [
 //
 interface ManagerAlertProps {}
 
-
 const ManagerAlert: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen2, setIsModalOpen2] = useState(false);
+
   const confirm: PopconfirmProps["onConfirm"] = (e) => {
-      setIsModalOpen(true);
+    setIsModalOpen(true);
   };
   const columns: TableProps<DataType>["columns"] = [
     {
@@ -247,7 +245,12 @@ const ManagerAlert: React.FC = () => {
       dataIndex: "address",
       key: "address",
       render: () => (
-        <Button type="primary" onClick={onEditClick}>
+        <Button
+          type="primary"
+          onClick={() => {
+            onEditClick(showModal2);
+          }}
+        >
           Chỉnh sửa
         </Button>
       ),
@@ -299,9 +302,12 @@ const ManagerAlert: React.FC = () => {
       render: () => <Button type="primary">Xóa</Button>,
     },
   ];
-  
+
   const showModal = () => {
     setIsModalOpen(true);
+  };
+  const showModal2 = () => {
+    setIsModalOpen2(true);
   };
   const handleOk = () => {
     setIsModalOpen(false);
@@ -309,6 +315,7 @@ const ManagerAlert: React.FC = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsModalOpen2(false);
   };
   return (
     <>
@@ -346,7 +353,18 @@ const ManagerAlert: React.FC = () => {
         >
           {/* <Tabs defaultActiveKey="1" items={items} onChange={onChange1} />; */}
           <FormC2 />
+        </Modal>
 
+        <Modal
+          title="Sửa cảnh báo"
+          open={isModalOpen2}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          width={800}
+          style={{ width: "100%" }}
+        >
+          {/* <Tabs defaultActiveKey="1" items={items} onChange={onChange1} />; */}
+          <FormC2 />
         </Modal>
         <Select
           defaultValue="Tất cả nhắc nhở"

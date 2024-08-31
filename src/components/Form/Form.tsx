@@ -96,6 +96,9 @@ const FormC: React.FC = () => {
             ngày
           </span>
         </Form.Item>
+        <Form.Item label="Hình ảnh">
+          <MyUpload />
+        </Form.Item>
         {/* text <Area></Area>*/}
         <Form.Item label="Ghi chú">
           <TextArea />
@@ -108,8 +111,6 @@ const FormC: React.FC = () => {
     </div>
   );
 };
-
-
 
 export const FormC2: React.FC = () => {
   const [isName, setIsName] = useState<boolean>(false);
@@ -129,10 +130,7 @@ export const FormC2: React.FC = () => {
           style={{ gap: 10 }}
           label="Loại nhắc nhở"
         >
-           <Input 
-           disabled={true}
-           value={"cảnh báo dầu"}
-           />
+          <Input disabled={true} value={"cảnh báo dầu"} />
         </Form.Item>
         {/* tên nhắc nhở */}
         {isName && (
@@ -149,9 +147,7 @@ export const FormC2: React.FC = () => {
           <span style={{ marginLeft: 10, display: "inline-block" }}>(KM)</span>
         </Form.Item>
         <Form.Item label="Cảnh báo sau">
-          <InputNumber 
-          value={20}
-          />
+          <InputNumber value={20} />
           <span style={{ marginLeft: 10, display: "inline-block" }}>(KM)</span>
         </Form.Item>
 
@@ -168,6 +164,9 @@ export const FormC2: React.FC = () => {
           <span style={{ marginLeft: "10px", display: "inline-block" }}>
             ngày
           </span>
+        </Form.Item>
+        <Form.Item label="Hình ảnh">
+          <MyUpload />
         </Form.Item>
         {/* text <Area></Area>*/}
         <Form.Item label="Ghi chú">
