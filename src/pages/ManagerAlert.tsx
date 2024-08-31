@@ -169,6 +169,41 @@ const columns: TableProps<DataType>["columns"] = [
   },
 ];
 
+const columnsHistory: TableProps<DataType>["columns"] = [
+  {
+    title: "Tên nhắc nhở",
+    dataIndex: "name",
+    key: "name",
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Biển số phương tiện",
+    dataIndex: "licensePlate",
+    key: "licensePlate",
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Loại nhắc nhở ",
+    dataIndex: "type",
+    key: "type",
+  },
+  {
+    title: "Số Kilomet nhắc nhở ",
+    dataIndex: "km",
+    key: "km",
+  },
+  {
+    title: "Ngày nhắc nhở ",
+    dataIndex: "date",
+    key: "date",
+  },
+  {
+    title: "Trạng thái nhắc nhở ",
+    dataIndex: "time",
+    key: "time",
+  },
+];
+
 const data: DataType[] = [
   {
     key: "1",
@@ -257,9 +292,11 @@ const data1: DataTypeReminder[] = [
 ];
 
 //
-interface ManagerAlertProps {}
+interface ManagerAlertProps {
+  isHistory?: boolean;
+}
 
-const ManagerAlert: React.FC = () => {
+const ManagerAlert: React.FC<ManagerAlertProps> = ({ isHistory = false }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -291,7 +328,7 @@ const ManagerAlert: React.FC = () => {
           onSearch={onSearch}
           style={{ width: 800, margin: 24 }}
         />
- 
+
         <Modal
           title="Quản lý các loại nhắc nhở"
           open={isModalOpen}
@@ -361,7 +398,8 @@ const ManagerAlert: React.FC = () => {
           ]}
         />
       </div>
-      <Table columns={columns} dataSource={data} />;
+      <Table columns={isHistory ? columnsHistory : columns} dataSource={data} />
+      ;
     </>
   );
 };
