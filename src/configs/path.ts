@@ -1,4 +1,7 @@
+import Detail from "../pages/Detail";
+
 const path = {
+  Detail: "/detail",
   home: "/",
   tire: "/tire",
   manager: "/manager",

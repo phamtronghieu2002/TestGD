@@ -17,6 +17,7 @@ import {
   Upload,
 } from "antd";
 import moment from "moment";
+import MyUpload from "../upload/upload";
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -29,7 +30,7 @@ const normFile = (e: any) => {
 };
 
 const FormC: React.FC = () => {
-  const [componentDisabled, setComponentDisabled] = useState<boolean>(true);
+  const [isName, setIsName] = useState<boolean>(false);
 
   return (
     <div style={{ paddingTop: "20px" }}>
@@ -46,18 +47,39 @@ const FormC: React.FC = () => {
           style={{ gap: 10 }}
           label="Loại nhắc nhở"
         >
-          <Select defaultValue={"demo"}>
+          <Select
+            onChange={(value) => {
+              if (value === "khac") {
+                setIsName(true);
+              } else {
+                setIsName(false);
+              }
+            }}
+            defaultValue={"demo"}
+          >
             <Select.Option value="demo">Nhắc nhở xăng</Select.Option>
             <Select.Option value="demo2">Nhắc nhở dầu</Select.Option>
             <Select.Option value="demo3 ">Nhắc nhở nhớt</Select.Option>
+            <Select.Option value="khac">Khác</Select.Option>
           </Select>
         </Form.Item>
         {/* tên nhắc nhở */}
-        <Form.Item label="Tên nhắc nhở">
-          <Input placeholder="Nhập tên nhắc nhở" />
-        </Form.Item>
-        <Form.Item label="Số KM">
+        {isName && (
+          <Form.Item
+            rules={[{ required: true, message: "Name is required" }]}
+            style={{ gap: 10 }}
+            label="Tên loại nhắc nhở"
+          >
+            <Input />
+          </Form.Item>
+        )}
+        <Form.Item label="KM ban đầu">
           <InputNumber />
+          <span style={{ marginLeft: 10, display: "inline-block" }}>(KM)</span>
+        </Form.Item>
+        <Form.Item label="Cảnh báo sau">
+          <InputNumber />
+          <span style={{ marginLeft: 10, display: "inline-block" }}>(KM)</span>
         </Form.Item>
 
         <Form.Item label="Ngày nhắc nhở">
@@ -74,8 +96,13 @@ const FormC: React.FC = () => {
             ngày
           </span>
         </Form.Item>
+        {/* text <Area></Area>*/}
+        <Form.Item label="Ghi chú">
+          <TextArea />
+        </Form.Item>
+
         <Form.Item label="Bật/Tắt nhắc nhở" valuePropName="checked">
-          <Switch />
+          <Switch defaultChecked />
         </Form.Item>
       </Form>
     </div>
@@ -100,8 +127,53 @@ export const FormAddViahicle: React.FC = () => {
         <Form.Item label="Giấy phép">
           <Input placeholder="Nhập giấy phép lái xe" />
         </Form.Item>
-   
       </Form>
+    </div>
+  );
+};
+
+export const FormAddTire: React.FC = () => {
+  return (
+    <div style={{ paddingTop: "20px" }}>
+      <Form
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 14 }}
+        layout="horizontal"
+        disabled={false}
+        style={{ maxWidth: 600 }}
+      >
+        {/* loại nhắc nhở */}
+
+        {/* tên nhắc nhở */}
+        <Form.Item label="size lôp">
+          <Input placeholder="Nhập size lốp" />
+        </Form.Item>
+        <Form.Item label="seri lôp">
+          <Input placeholder="Nhập seri lốp" />
+        </Form.Item>
+        <Form.Item label="thương hiệu lôp">
+          <Input placeholder="Nhập thương hiệu lốp" />
+        </Form.Item>
+      </Form>
+    </div>
+  );
+};
+
+export const FormExportExel: React.FC = () => {
+  return (
+    <div style={{ paddingTop: "20px" }}>
+      <a href="">Tải file mẫu tại đây</a>
+      {/* center div */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "20px",
+        }}
+      >
+        <MyUpload />
+      </div>
     </div>
   );
 };

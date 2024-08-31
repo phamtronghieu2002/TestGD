@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { Button, Tabs, Table, Space, Flex, Modal } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
-import Form, { FormAddViahicle } from "../components/Form/Form";
+import Form, { FormAddViahicle, FormExportExel } from "../components/Form/Form";
+import { Input } from "antd";
+import { Link } from "react-router-dom";
+const { Search } = Input;
 type TableRowSelection<T extends object = object> =
   TableProps<T>["rowSelection"];
 
@@ -9,11 +12,20 @@ interface DataType {
   key: React.Key;
   name: string;
   age: number;
+  isAlert: string;
+  detail: ReactNode;
 }
-
 const columns: TableColumnsType<DataType> = [
   { title: "Biển số", dataIndex: "name" },
   { title: "Giấy phép", dataIndex: "age" },
+  { title: "Đang  có cảnh báo", dataIndex: "isAlert" }, // Sửa ở đây
+  { title: "Chi tiết", dataIndex: "detail" },
+];
+const columns1: TableColumnsType<DataType> = [
+  { title: "Biển số", dataIndex: "name" },
+  { title: "Giấy phép", dataIndex: "age" },
+  { title: "Đang có cảnh báo", dataIndex: "isAlert" }, // Sửa ở đây
+  { title: "Chi tiết", dataIndex: "detail" },
 
   {
     title: "Thao tác",
@@ -31,13 +43,29 @@ const columns: TableColumnsType<DataType> = [
   },
 ];
 
-const dataSource = Array.from<DataType>({ length: 4 }).map<DataType>(
-  (_, i) => ({
-    key: i,
-    name: `Edward King ${i}`,
+const dataSource: DataType[] = [
+  {
+    key: 1,
+    name: `Edward King1`,
     age: 32,
-  })
-);
+    isAlert: "Cảnh báo dầu,Bình điện,Đăng kiểm",
+    detail: <Link to="/detail">Chi tiết</Link>,
+  },
+  {
+    key: 1,
+    name: `Edward King1`,
+    age: 32,
+    isAlert: "Cảnh báo xăng",
+    detail: <Link to="/detail">Chi tiết</Link>,
+  },
+  {
+    key: 1,
+    name: `Edward King1`,
+    age: 32,
+    isAlert: "----",
+    detail: <Link to="/detail">Chi tiết</Link>,
+  },
+];
 
 const TabTable: React.FC = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -68,6 +96,10 @@ const TabTable: React.FC = () => {
       <Space>
         {hasSelected ? `Selected ${selectedRowKeys.length} items` : null}
       </Space>
+      {/* div center */}
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Search placeholder="Tìm phương tiện" style={{ width: 200 }} />
+      </div>
       <Table
         rowSelection={rowSelection}
         columns={columns}
@@ -80,15 +112,20 @@ const TabTable1: React.FC = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalOpenA, setIsModalOpenA] = useState(false);
+  const [isModalOpenB, setIsModalOpenB] = useState(false);
 
   const showModalA = () => {
     setIsModalOpenA(true);
+  };
+  const showModalB = () => {
+    setIsModalOpenB(true);
   };
 
   const handleOk = () => {};
 
   const handleCancel = () => {
     setIsModalOpenA(false);
+    setIsModalOpenB(false);
   };
 
   const start = () => {
@@ -111,7 +148,11 @@ const TabTable1: React.FC = () => {
   const hasSelected = selectedRowKeys.length > 0;
 
   return (
-    <Space direction="vertical" size="middle" style={{ display: "flex",marginTop:'20px' }}>
+    <Space
+      direction="vertical"
+      size="middle"
+      style={{ display: "flex", marginTop: "20px" }}
+    >
       <Modal
         style={{}}
         title="Thêm phương tiện"
@@ -121,23 +162,34 @@ const TabTable1: React.FC = () => {
       >
         <FormAddViahicle />
       </Modal>
+      <Modal
+        style={{}}
+        title="Nhập file exel"
+        open={isModalOpenB}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <FormExportExel />
+      </Modal>
+
       <Space>
         {hasSelected ? `Selected ${selectedRowKeys.length} items` : null}
       </Space>
-      <div style={{display:'flex', justifyContent:'flex-end'}}>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Flex gap="small" wrap align="center">
+          <Search placeholder="Tìm phương tiện" style={{ width: 200 }} />
           <Button type="primary" onClick={showModalA}>
             Thêm Phương Tiện
           </Button>
-          <span>Hoặc</span>
 
-          <Button type="primary">Import từ Exel</Button>
-          <a href="">Tải mẫu exel tại đây</a>
+          <Button type="primary" onClick={showModalB}>
+            Import từ Exel
+          </Button>
         </Flex>
       </div>
       <Table
         rowSelection={rowSelection}
-        columns={columns}
+        columns={columns1}
         dataSource={dataSource}
       />
     </Space>

@@ -6,6 +6,7 @@ import type { GetProps } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 import { Modal } from "antd";
 import { Option } from "antd/es/mentions";
+import { FormAddTire } from "../components/Form/Form";
 interface DataType {
   key: React.Key;
   name: string;
@@ -54,7 +55,11 @@ const columns: TableColumnsType<DataType> = [
     ),
   },
 ];
-
+type FieldType = {
+  username?: string;
+  password?: string;
+  remember?: string;
+};
 const data: DataType[] = [
   {
     key: "1",
@@ -149,10 +154,7 @@ const Tire: FC<TireProps> = () => {
         <div className="">
           {/* form have field select using Form and */}
 
-          <Form.Item
-            label="Lọc"
-            name="select"
-          >
+          <Form.Item label="Lọc" name="select">
             <Select placeholder="Select a option and change input text above">
               <Option value="option1">Option1</Option>
               <Option value="option2">Option2</Option>
@@ -169,9 +171,7 @@ const Tire: FC<TireProps> = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <FormAddTire />
       </Modal>
     </div>
   );
