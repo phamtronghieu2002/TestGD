@@ -5,6 +5,8 @@ import Form, { FormAddViahicle, FormExportExel } from "../components/Form/Form";
 import { Input } from "antd";
 import { Link } from "react-router-dom";
 const { Search } = Input;
+import { Drawer } from "antd";
+import Detail from "./Detail";
 type TableRowSelection<T extends object = object> =
   TableProps<T>["rowSelection"];
 
@@ -43,34 +45,43 @@ const columns1: TableColumnsType<DataType> = [
   },
 ];
 
-const dataSource: DataType[] = [
-  {
-    key: 1,
-    name: `92H1 - 5312`,
-    age: 32,
-    isAlert: "🛢 🔧 ⚡️ 🗒 ⭐",
-    detail: <Link to="/detail">Chi tiết</Link>,
-  },
-  {
-    key: 2,
-    name: `47H3 - 1234`,
-    age: 32,
-    isAlert: "🛢",
-    detail: <Link to="/detail">Chi tiết</Link>,
-  },
-  {
-    key: 3,
-    name: `59H1 - 1234`,
-    age: 32,
-    isAlert: "  ",
-    detail: <Link to="/detail">Chi tiết</Link>,
-  },
-];
-
 const TabTable: React.FC = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  const dataSource: DataType[] = [
+    {
+      key: 1,
+      name: `92H1 - 5312`,
+      age: 32,
+      isAlert: "🛢 🔧 ⚡️ 🗒 ⭐",
+      detail: <Button onClick={showDrawer}>Chi tiết</Button>,
+    },
+    {
+      key: 2,
+      name: `47H3 - 1234`,
+      age: 32,
+      isAlert: "🛢",
+      detail: <Link to="/detail">Chi tiết</Link>,
+    },
+    {
+      key: 3,
+      name: `59H1 - 1234`,
+      age: 32,
+      isAlert: "  ",
+      detail: <Link to="/detail">Chi tiết</Link>,
+    },
+  ];
   const start = () => {
     setLoading(true);
     setTimeout(() => {
@@ -93,6 +104,9 @@ const TabTable: React.FC = () => {
 
   return (
     <Space direction="vertical" size="middle" style={{ display: "flex" }}>
+      <Drawer width={"90%"} title="Basic Drawer" onClose={onClose} open={open}>
+        <Detail />
+      </Drawer>
       <Space>
         {hasSelected ? `Selected ${selectedRowKeys.length} items` : null}
       </Space>
@@ -113,7 +127,29 @@ const TabTable1: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [isModalOpenA, setIsModalOpenA] = useState(false);
   const [isModalOpenB, setIsModalOpenB] = useState(false);
-
+  const dataSource: DataType[] = [
+    {
+      key: 1,
+      name: `92H1 - 5312`,
+      age: 32,
+      isAlert: "🛢 🔧 ⚡️ 🗒 ⭐",
+      detail: <Link to="/detail">Chi tiết</Link>,
+    },
+    {
+      key: 2,
+      name: `47H3 - 1234`,
+      age: 32,
+      isAlert: "🛢",
+      detail: <Link to="/detail">Chi tiết</Link>,
+    },
+    {
+      key: 3,
+      name: `59H1 - 1234`,
+      age: 32,
+      isAlert: "  ",
+      detail: <Link to="/detail">Chi tiết</Link>,
+    },
+  ];
   const showModalA = () => {
     setIsModalOpenA(true);
   };
